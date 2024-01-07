@@ -29,5 +29,8 @@ vlog BCIM_tb.sv
 view structure
 vsim -t 1ps -voptargs=+acc -L work BCIM_tb
 
+transcript on
+transcript file "transcript"
+
 do wave.do
 run -all 
