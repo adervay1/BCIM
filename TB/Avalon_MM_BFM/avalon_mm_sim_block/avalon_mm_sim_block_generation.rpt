@@ -1,0 +1,61 @@
+Info: Starting: Create simulation model
+Info: qsys-generate S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block.qsys --simulation=VERILOG --output-directory=S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block\simulation --family="Cyclone IV E" --part=EP4CE22F17C6
+Progress: Loading Avalon_MM_BFM/avalon_mm_sim_block.qsys
+Progress: Reading input file
+Progress: Adding mm_master_bfm_0 [altera_avalon_mm_master_bfm 15.0]
+Progress: Parameterizing module mm_master_bfm_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: avalon_mm_sim_block: Generating avalon_mm_sim_block "avalon_mm_sim_block" for SIM_VERILOG
+Info: mm_master_bfm_0: "avalon_mm_sim_block" instantiated altera_avalon_mm_master_bfm "mm_master_bfm_0"
+Info: avalon_mm_sim_block: Done "avalon_mm_sim_block" with 2 modules, 5 files
+Info: ip-generate succeeded.
+Info: Finished: Create simulation model
+Info: Starting: Create Modelsim Project.
+Info: sim-script-gen --spd=S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block\avalon_mm_sim_block.spd --output-directory=S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ --use-relative-paths=true
+Info: Doing: ip-make-simscript --spd=S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block\avalon_mm_sim_block.spd --output-directory=S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ --use-relative-paths=true
+Info: Generating the following file(s) for MODELSIM simulator in S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Generating the following file(s) for VCS simulator in S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ directory:
+Info: 	synopsys/vcs/vcs_setup.sh
+Info: Generating the following file(s) for VCSMX simulator in S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: Generating the following file(s) for NCSIM simulator in S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ directory:
+Info: 	cadence/cds.lib
+Info: 	cadence/hdl.var
+Info: 	cadence/ncsim_setup.sh
+Info: 	2 .cds.lib files in cadence/cds_libs/ directory
+Info: Generating the following file(s) for RIVIERA simulator in S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/simulation/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: Finished: Create Modelsim Project.
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block.qsys --block-symbol-file --output-directory=S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block --family="Cyclone IV E" --part=EP4CE22F17C6
+Progress: Loading Avalon_MM_BFM/avalon_mm_sim_block.qsys
+Progress: Reading input file
+Progress: Adding mm_master_bfm_0 [altera_avalon_mm_master_bfm 15.0]
+Progress: Parameterizing module mm_master_bfm_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: ip-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block.qsys --synthesis=VERILOG --output-directory=S:\_FPGA_Projects\Prime\ISA_Restructure\sim\Avalon_MM_BFM\avalon_mm_sim_block\synthesis --family="Cyclone IV E" --part=EP4CE22F17C6
+Progress: Loading Avalon_MM_BFM/avalon_mm_sim_block.qsys
+Progress: Reading input file
+Progress: Adding mm_master_bfm_0 [altera_avalon_mm_master_bfm 15.0]
+Progress: Parameterizing module mm_master_bfm_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: avalon_mm_sim_block: Generating avalon_mm_sim_block "avalon_mm_sim_block" for QUARTUS_SYNTH
+Info: mm_master_bfm_0: "avalon_mm_sim_block" instantiated altera_avalon_mm_master_bfm "mm_master_bfm_0"
+Info: avalon_mm_sim_block: Done "avalon_mm_sim_block" with 2 modules, 5 files
+Info: ip-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

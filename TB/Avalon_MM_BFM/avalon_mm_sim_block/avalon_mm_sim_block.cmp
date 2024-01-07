@@ -1,0 +1,14 @@
+	component avalon_mm_sim_block is
+		port (
+			clk               : in  std_logic                     := 'X';             -- clk
+			reset             : in  std_logic                     := 'X';             -- reset
+			avm_address       : out std_logic_vector(31 downto 0);                    -- address
+			avm_readdata      : in  std_logic_vector(31 downto 0) := (others => 'X'); -- readdata
+			avm_writedata     : out std_logic_vector(31 downto 0);                    -- writedata
+			avm_waitrequest   : in  std_logic                     := 'X';             -- waitrequest
+			avm_write         : out std_logic;                                        -- write
+			avm_read          : out std_logic;                                        -- read
+			avm_readdatavalid : in  std_logic                     := 'X'              -- readdatavalid
+		);
+	end component avalon_mm_sim_block;
+
