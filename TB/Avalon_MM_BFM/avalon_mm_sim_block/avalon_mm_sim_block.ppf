@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pinplan
+ variation_name="mm_master_bfm_0"
+ megafunction_name="ALTERA_AVALON_MM_MASTER_BFM"
+ specifies="all_ports">
+ <global>
+  <pin name="clk" direction="input" scope="external" />
+  <pin name="reset" direction="input" scope="external" />
+  <pin name="avm_address[31..0]" direction="output" scope="external" />
+  <pin name="avm_readdata[31..0]" direction="input" scope="external" />
+  <pin name="avm_writedata[31..0]" direction="output" scope="external" />
+  <pin name="avm_waitrequest" direction="input" scope="external" />
+  <pin name="avm_write" direction="output" scope="external" />
+  <pin name="avm_read" direction="output" scope="external" />
+  <pin name="avm_readdatavalid" direction="input" scope="external" />
+ </global>
+</pinplan>

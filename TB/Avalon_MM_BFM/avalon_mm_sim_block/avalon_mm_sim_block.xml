@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<deploy
+ date="2021.12.12.22:41:30"
+ outputDirectory="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/">
+ <perimeter>
+  <parameter
+     name="AUTO_GENERATION_ID"
+     type="Integer"
+     defaultValue="0"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_UNIQUE_ID"
+     type="String"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_FAMILY"
+     type="String"
+     defaultValue="Cyclone IV E"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE"
+     type="String"
+     defaultValue="EP4CE22F17C6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_DEVICE_SPEEDGRADE"
+     type="String"
+     defaultValue="6"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_RATE"
+     type="Long"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_CLOCK_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_CLK_RESET_DOMAIN"
+     type="Integer"
+     defaultValue="-1"
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_M0_ADDRESS_MAP"
+     type="AddressMap"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <parameter
+     name="AUTO_M0_ADDRESS_WIDTH"
+     type="AddressWidthType"
+     defaultValue=""
+     onHdl="0"
+     affectsHdl="1" />
+  <interface name="clk" kind="clock" start="0">
+   <property name="clockRate" value="0" />
+   <property name="externallyDriven" value="false" />
+   <property name="ptfSchematicName" value="" />
+   <port name="clk" direction="input" role="clk" width="1" />
+  </interface>
+  <interface name="clk_reset" kind="reset" start="0">
+   <property name="associatedClock" value="clk" />
+   <property name="synchronousEdges" value="DEASSERT" />
+   <port name="reset" direction="input" role="reset" width="1" />
+  </interface>
+  <interface name="m0" kind="avalon" start="1">
+   <property name="adaptsTo" value="" />
+   <property name="addressGroup" value="0" />
+   <property name="addressUnits" value="WORDS" />
+   <property name="alwaysBurstMaxBurst" value="false" />
+   <property name="associatedClock" value="clk" />
+   <property name="associatedReset" value="clk_reset" />
+   <property name="bitsPerSymbol" value="8" />
+   <property name="burstOnBurstBoundariesOnly" value="true" />
+   <property name="burstcountUnits" value="WORDS" />
+   <property name="constantBurstBehavior" value="false" />
+   <property name="dBSBigEndian" value="false" />
+   <property name="doStreamReads" value="false" />
+   <property name="doStreamWrites" value="false" />
+   <property name="holdTime" value="0" />
+   <property name="interleaveBursts" value="false" />
+   <property name="isAsynchronous" value="false" />
+   <property name="isBigEndian" value="false" />
+   <property name="isReadable" value="false" />
+   <property name="isWriteable" value="false" />
+   <property name="linewrapBursts" value="true" />
+   <property name="maxAddressWidth" value="32" />
+   <property name="maximumPendingReadTransactions" value="0" />
+   <property name="maximumPendingWriteTransactions" value="0" />
+   <property name="readLatency" value="0" />
+   <property name="readWaitTime" value="1" />
+   <property name="registerIncomingSignals" value="false" />
+   <property name="registerOutgoingSignals" value="false" />
+   <property name="setupTime" value="0" />
+   <property name="timingUnits" value="Cycles" />
+   <property name="writeWaitTime" value="0" />
+   <port name="avm_address" direction="output" role="address" width="32" />
+   <port name="avm_readdata" direction="input" role="readdata" width="32" />
+   <port name="avm_writedata" direction="output" role="writedata" width="32" />
+   <port name="avm_waitrequest" direction="input" role="waitrequest" width="1" />
+   <port name="avm_write" direction="output" role="write" width="1" />
+   <port name="avm_read" direction="output" role="read" width="1" />
+   <port
+       name="avm_readdatavalid"
+       direction="input"
+       role="readdatavalid"
+       width="1" />
+  </interface>
+ </perimeter>
+ <entity
+   path=""
+   parameterizationKey="avalon_mm_sim_block:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=EP4CE22F17C6,AUTO_DEVICE_FAMILY=Cyclone IV E,AUTO_DEVICE_SPEEDGRADE=6,AUTO_GENERATION_ID=1639366889,AUTO_M0_ADDRESS_MAP=,AUTO_M0_ADDRESS_WIDTH=,AUTO_UNIQUE_ID=(altera_avalon_mm_master_bfm:15.0:ADDRESS_UNITS=WORDS,ASSERT_HIGH_ARBITERLOCK=1,ASSERT_HIGH_BYTEENABLE=1,ASSERT_HIGH_LOCK=1,ASSERT_HIGH_READ=1,ASSERT_HIGH_READDATAVALID=1,ASSERT_HIGH_RESET=1,ASSERT_HIGH_WAITREQUEST=1,ASSERT_HIGH_WRITE=1,AV_ADDRESS_W=32,AV_ALWAYS_BURST_MAX_BURST=0,AV_BURSTCOUNT_W=1,AV_BURST_BNDR_ONLY=1,AV_BURST_LINEWRAP=1,AV_CONSTANT_BURST_BEHAVIOR=1,AV_FIX_READ_LATENCY=1,AV_MAX_PENDING_READS=0,AV_MAX_PENDING_WRITES=0,AV_NUMSYMBOLS=4,AV_READRESPONSE_W=8,AV_READ_WAIT_TIME=1,AV_REGISTERINCOMINGSIGNALS=0,AV_SYMBOL_W=8,AV_WRITERESPONSE_W=8,AV_WRITE_WAIT_TIME=0,REGISTER_WAITREQUEST=0,USE_ADDRESS=1,USE_ARBITERLOCK=0,USE_BEGIN_BURST_TRANSFER=0,USE_BEGIN_TRANSFER=0,USE_BURSTCOUNT=0,USE_BYTE_ENABLE=0,USE_CLKEN=0,USE_DEBUGACCESS=0,USE_LOCK=0,USE_READ=1,USE_READRESPONSE=0,USE_READ_DATA=1,USE_READ_DATA_VALID=1,USE_TRANSACTIONID=0,USE_WAIT_REQUEST=1,USE_WRITE=1,USE_WRITERESPONSE=0,USE_WRITE_DATA=1,VHDL_ID=0)"
+   instancePathKey="avalon_mm_sim_block"
+   kind="avalon_mm_sim_block"
+   version="1.0"
+   name="avalon_mm_sim_block">
+  <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
+  <parameter name="AUTO_GENERATION_ID" value="1639366889" />
+  <parameter name="AUTO_DEVICE" value="EP4CE22F17C6" />
+  <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone IV E" />
+  <parameter name="AUTO_M0_ADDRESS_MAP" value="" />
+  <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
+  <parameter name="AUTO_CLK_CLOCK_DOMAIN" value="-1" />
+  <parameter name="AUTO_M0_ADDRESS_WIDTH" value="" />
+  <parameter name="AUTO_UNIQUE_ID" value="" />
+  <parameter name="AUTO_DEVICE_SPEEDGRADE" value="6" />
+  <generatedFiles>
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/avalon_mm_sim_block.v"
+       type="VERILOG" />
+  </generatedFiles>
+  <childGeneratedFiles>
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/verbosity_pkg.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/avalon_mm_pkg.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/avalon_utilities_pkg.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/altera_avalon_mm_master_bfm.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+  </childGeneratedFiles>
+  <sourceFiles>
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block.qsys" />
+  </sourceFiles>
+  <childSourceFiles>
+   <file
+       path="C:/altera/15.0/ip/altera/sopc_builder_ip/verification/altera_avalon_mm_master_bfm/altera_avalon_mm_master_bfm_hw.tcl" />
+  </childSourceFiles>
+  <messages>
+   <message level="Debug" culprit="avalon_mm_sim_block">queue size: 0 starting:avalon_mm_sim_block "avalon_mm_sim_block"</message>
+   <message level="Progress" culprit="min"></message>
+   <message level="Progress" culprit="max"></message>
+   <message level="Progress" culprit="current"></message>
+   <message level="Debug">Transform: CustomInstructionTransform</message>
+   <message level="Debug">No custom instruction connections, skipping transform </message>
+   <message level="Debug" culprit="merlin_custom_instruction_transform"><![CDATA[After transform: <b>1</b> modules, <b>0</b> connections]]></message>
+   <message level="Debug">Transform: MMTransform</message>
+   <message level="Debug">Transform: InterruptMapperTransform</message>
+   <message level="Debug">Transform: InterruptSyncTransform</message>
+   <message level="Debug">Transform: InterruptFanoutTransform</message>
+   <message level="Debug">Transform: AvalonStreamingTransform</message>
+   <message level="Debug">Transform: ResetAdaptation</message>
+   <message level="Debug" culprit="avalon_mm_sim_block"><![CDATA["<b>avalon_mm_sim_block</b>" reuses <b>altera_avalon_mm_master_bfm</b> "<b>submodules/altera_avalon_mm_master_bfm</b>"]]></message>
+   <message level="Debug" culprit="avalon_mm_sim_block">queue size: 0 starting:altera_avalon_mm_master_bfm "submodules/altera_avalon_mm_master_bfm"</message>
+   <message level="Info" culprit="mm_master_bfm_0"><![CDATA["<b>avalon_mm_sim_block</b>" instantiated <b>altera_avalon_mm_master_bfm</b> "<b>mm_master_bfm_0</b>"]]></message>
+  </messages>
+ </entity>
+ <entity
+   path="submodules/"
+   parameterizationKey="altera_avalon_mm_master_bfm:15.0:ADDRESS_UNITS=WORDS,ASSERT_HIGH_ARBITERLOCK=1,ASSERT_HIGH_BYTEENABLE=1,ASSERT_HIGH_LOCK=1,ASSERT_HIGH_READ=1,ASSERT_HIGH_READDATAVALID=1,ASSERT_HIGH_RESET=1,ASSERT_HIGH_WAITREQUEST=1,ASSERT_HIGH_WRITE=1,AV_ADDRESS_W=32,AV_ALWAYS_BURST_MAX_BURST=0,AV_BURSTCOUNT_W=1,AV_BURST_BNDR_ONLY=1,AV_BURST_LINEWRAP=1,AV_CONSTANT_BURST_BEHAVIOR=1,AV_FIX_READ_LATENCY=1,AV_MAX_PENDING_READS=0,AV_MAX_PENDING_WRITES=0,AV_NUMSYMBOLS=4,AV_READRESPONSE_W=8,AV_READ_WAIT_TIME=1,AV_REGISTERINCOMINGSIGNALS=0,AV_SYMBOL_W=8,AV_WRITERESPONSE_W=8,AV_WRITE_WAIT_TIME=0,REGISTER_WAITREQUEST=0,USE_ADDRESS=1,USE_ARBITERLOCK=0,USE_BEGIN_BURST_TRANSFER=0,USE_BEGIN_TRANSFER=0,USE_BURSTCOUNT=0,USE_BYTE_ENABLE=0,USE_CLKEN=0,USE_DEBUGACCESS=0,USE_LOCK=0,USE_READ=1,USE_READRESPONSE=0,USE_READ_DATA=1,USE_READ_DATA_VALID=1,USE_TRANSACTIONID=0,USE_WAIT_REQUEST=1,USE_WRITE=1,USE_WRITERESPONSE=0,USE_WRITE_DATA=1,VHDL_ID=0"
+   instancePathKey="avalon_mm_sim_block:.:mm_master_bfm_0"
+   kind="altera_avalon_mm_master_bfm"
+   version="15.0"
+   name="altera_avalon_mm_master_bfm">
+  <generatedFiles>
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/verbosity_pkg.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/avalon_mm_pkg.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/avalon_utilities_pkg.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+   <file
+       path="S:/_FPGA_Projects/Prime/ISA_Restructure/sim/Avalon_MM_BFM/avalon_mm_sim_block/synthesis/submodules/altera_avalon_mm_master_bfm.sv"
+       type="SYSTEM_VERILOG"
+       attributes="" />
+  </generatedFiles>
+  <childGeneratedFiles/>
+  <sourceFiles>
+   <file
+       path="C:/altera/15.0/ip/altera/sopc_builder_ip/verification/altera_avalon_mm_master_bfm/altera_avalon_mm_master_bfm_hw.tcl" />
+  </sourceFiles>
+  <childSourceFiles/>
+  <instantiator instantiator="avalon_mm_sim_block" as="mm_master_bfm_0" />
+  <messages>
+   <message level="Debug" culprit="avalon_mm_sim_block">queue size: 0 starting:altera_avalon_mm_master_bfm "submodules/altera_avalon_mm_master_bfm"</message>
+   <message level="Info" culprit="mm_master_bfm_0"><![CDATA["<b>avalon_mm_sim_block</b>" instantiated <b>altera_avalon_mm_master_bfm</b> "<b>mm_master_bfm_0</b>"]]></message>
+  </messages>
+ </entity>
+</deploy>

@@ -1,0 +1,21 @@
+# system info avalon_mm_sim_block on 2021.12.12.22:41:23
+system_info:
+name,value
+DEVICE,EP4CE22F17C6
+DEVICE_FAMILY,Cyclone IV E
+GENERATION_ID,1639366881
+#
+#
+# Files generated for avalon_mm_sim_block on 2021.12.12.22:41:23
+files:
+filepath,kind,attributes,module,is_top
+simulation/avalon_mm_sim_block.v,VERILOG,,avalon_mm_sim_block,true
+simulation/submodules/verbosity_pkg.sv,SYSTEM_VERILOG, COMMON_SYSTEMVERILOG_PACKAGE=avalon_vip_verbosity_pkg,altera_avalon_mm_master_bfm,false
+simulation/submodules/avalon_mm_pkg.sv,SYSTEM_VERILOG, COMMON_SYSTEMVERILOG_PACKAGE=avalon_vip_avalon_mm_pkg,altera_avalon_mm_master_bfm,false
+simulation/submodules/avalon_utilities_pkg.sv,SYSTEM_VERILOG, COMMON_SYSTEMVERILOG_PACKAGE=avalon_vip_avalon_utilities_pkg,altera_avalon_mm_master_bfm,false
+simulation/submodules/altera_avalon_mm_master_bfm.sv,SYSTEM_VERILOG,,altera_avalon_mm_master_bfm,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+avalon_mm_sim_block.mm_master_bfm_0,altera_avalon_mm_master_bfm
