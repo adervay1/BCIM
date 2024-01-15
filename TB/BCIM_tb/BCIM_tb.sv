@@ -5,6 +5,8 @@ module BCIM_tb;
 import avalon_mm_pkg::*;
 import verbosity_pkg::*;
 
+import BCIM_PKG::*;
+
 
 logic clk;
 logic rst;
@@ -58,6 +60,64 @@ prime_datapath prime_datapath_inst (
     .IMC_mm_read_in             (avalon_mm_read)
 );
 
+
+
+class tb_BCIM_class #(
+    int ARRAY_WIDTH = 8, 
+    int BUS_DATA_WIDTH
+) extends BCIM_class#(
+    .ARRAY_WIDTH(ARRAY_WIDTH),
+    .BUS_DATA_WIDTH(BUS_DATA_WIDTH)
+);
+
+    function new(input string my_name, input string prgm);
+        super.new(my_name, prgm);
+    endfunction
+    
+    //"Harness" connecting virtual function from parent to TB implementation details
+    function get_memory_array(input int addr, output [ARRAY_WIDTH-1:0] data);
+        data = prime_datapath_inst.ram_model_inst.mem[addr];
+    endfunction
+    
+    //"Harness" connecting virtual function from parent to TB implementation details
+    // This task operates the bfm to read IMC data
+    task read_memory_array(input int read_addr, output [ARRAY_WIDTH-1:0] rdata);
+    
+        avalon_mm_sim_block_inst.mm_master_bfm_0.set_command_address(read_addr);
+        avalon_mm_sim_block_inst.mm_master_bfm_0.set_command_request(REQ_READ);
+        
+        avalon_mm_sim_block_inst.mm_master_bfm_0.push_command();
+    
+        @(negedge(avalon_mm_readdatavalid));
+        
+        avalon_mm_sim_block_inst.mm_master_bfm_0.pop_response();
+        rdata = avalon_mm_sim_block_inst.mm_master_bfm_0.get_response_data(0);
+    
+    endtask
+    
+    //"Harness" connecting virtual function from parent to TB implementation details
+    // This task operates the bfm to send IMC commands
+    task send_imc_command(input [BUS_DATA_WIDTH-1:0] write_data);
+
+        avalon_mm_sim_block_inst.mm_master_bfm_0.set_command_data(write_data,0); // Set index to zero for now
+        avalon_mm_sim_block_inst.mm_master_bfm_0.set_command_address(0);
+        avalon_mm_sim_block_inst.mm_master_bfm_0.set_command_request(REQ_WRITE);
+    
+        avalon_mm_sim_block_inst.mm_master_bfm_0.push_command();
+        
+        @(negedge(avalon_mm_write));
+        avalon_mm_sim_block_inst.mm_master_bfm_0.pop_response();
+        
+        wait(prime_datapath_inst.rw_control_inst.state == 8'h1F);
+        
+    endtask
+
+endclass
+
+
+BCIM_class#(32,32) cipher_obj;
+tb_BCIM_class#(32,32) tb_cipher_obj;
+
 initial begin
     rst = 1'b1;
     $display("-- Simulation Starting (%t)ps --",$time);
@@ -78,6 +138,25 @@ initial begin
 
     Compact_AES();
     inv_Compact_AES();
+    
+    cipher_obj = new("ECB_AES_parent", "ECB_AES");
+    tb_cipher_obj = new("ECB_AES_child", "ECB_AES");
+    
+    cipher_obj.test_case_access(1);
+    tb_cipher_obj.test_case_access(1);
+    
+    cipher_obj.test_write_sequence();
+    tb_cipher_obj.test_write_sequence();
+    
+    //cipher_obj.read_memory_array(1,rd);
+    //$display("%h",rd);
+    //tb_cipher_obj.read_memory_array(1,rd);
+    //$display("%h",rd);
+    //tb_cipher_obj.get_memory_array(1,rd);
+    //$display("%h",rd);
+    
+    cipher_obj.run_cipher();
+    tb_cipher_obj.run_cipher();
     
 
     #128000;
