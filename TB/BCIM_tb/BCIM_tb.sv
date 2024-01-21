@@ -7,6 +7,9 @@ import verbosity_pkg::*;
 
 import BCIM_PKG::*;
 
+//-----------------------------------------------------------------------------------------------------------------
+//                                              DUT
+//-----------------------------------------------------------------------------------------------------------------
 
 logic clk;
 logic rst;
@@ -20,16 +23,6 @@ logic [31:0] avalon_mm_rdata;
 
 logic       avalon_mm_waitreq, avalon_mm_readdatavalid, avalon_mm_read, avalon_mm_write;
 
-logic [31:0] rd;
-
-logic [7:0] state_bytes [15:0];
-logic [7:0] plain_text_bytes [15:0];
-logic [7:0] round_key_bytes [15:0];
-logic [7:0] key_bytes [9:0][15:0];
-
-
-localparam PIM_ADDR_BITS = 8;
-localparam LOAD_OFFSET = 2**PIM_ADDR_BITS;
 
 avalon_mm_sim_block avalon_mm_sim_block_inst (
     .clk               (clk), // clk.clk
@@ -60,6 +53,10 @@ prime_datapath prime_datapath_inst (
     .IMC_mm_read_in             (avalon_mm_read)
 );
 
+
+//-----------------------------------------------------------------------------------------------------------------
+//                                              Class Extension
+//-----------------------------------------------------------------------------------------------------------------
 
 
 class tb_BCIM_class #(
@@ -130,9 +127,13 @@ class tb_BCIM_class #(
 
 endclass
 
+tb_BCIM_class#(32,32) env_cipher_obj;
 
-BCIM_class#(32,32) cipher_obj;
-tb_BCIM_class#(32,32) tb_cipher_obj;
+
+
+//-----------------------------------------------------------------------------------------------------------------
+//                                              Stimulus
+//-----------------------------------------------------------------------------------------------------------------
 
 initial begin
     rst = 1'b1;
@@ -151,11 +152,11 @@ initial begin
     $display("Version %S",avalon_mm_sim_block_inst.mm_master_bfm_0.get_version());
     avalon_mm_sim_block_inst.mm_master_bfm_0.init();
 
-
-    tb_cipher_obj = new("ECB_AES_child", "ECB_AES");
+    //Construct Cipher Object
+    env_cipher_obj = new("ECB_AES_child", "ECB_AES");
     
-    tb_cipher_obj.AES_ECB_Encrypt();
-    tb_cipher_obj.AES_ECB_Decrypt();
+    env_cipher_obj.AES_ECB_Encrypt();
+    env_cipher_obj.AES_ECB_Decrypt();
 
 
     #128000;
@@ -175,14 +176,6 @@ end
 //-----------------------------------------------------------------------------------------------------------------
 //                                              Tasks
 //-----------------------------------------------------------------------------------------------------------------
-
-
-
-
-//-----------------------------------------------------------------------------------------------------------------
-//                                              Intrinsics
-//-----------------------------------------------------------------------------------------------------------------
-
 
 
 endmodule

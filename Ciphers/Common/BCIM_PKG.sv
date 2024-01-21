@@ -80,7 +80,7 @@ package BCIM_PKG;
             $display("| %H | %H | %H | %H |",state_bytes[3],state_bytes[7],state_bytes[11],state_bytes[15]);
             $display("---------------------");
             
-        endtask
+        endtask : Print_AES_State_Bytes_1Col
 
     
         //Definitions of Cipher routines(methods)
@@ -93,12 +93,12 @@ package BCIM_PKG;
         //IMC Routines
         task Run_Cipher();
             case (this.prgm)
-                "ECB_AES"   : this.test_ecb_aes();
+                "ECB_AES"   : this.AES_ECB_Encrypt();
                 "CTR_AES"   : this.test_ctr_aes();
                 "RECTANGLE" : this.test_rectangle();
                 "SIMON"     : this.test_simon();
             endcase
-        endtask
+        endtask : Run_Cipher
           
-    endclass
+    endclass : BCIM_class
 endpackage

@@ -1,8 +1,3 @@
-//TODO: Delete
-task test_ecb_aes();
-    $display("ECB AES Program");
-endtask
-
 //Rounds
 task AES_ECB_Encrypt();
     logic [7:0] state_bytes [15:0];
@@ -62,7 +57,7 @@ task AES_ECB_Encrypt();
     #10us;
     Print_AES_State_Bytes_1Col('h00,"Add Key 1");
 
-endtask
+endtask : AES_ECB_Encrypt
 
 
 task AES_ECB_Decrypt();
@@ -106,7 +101,7 @@ task AES_ECB_Decrypt();
     Print_AES_State_Bytes_1Col('h00,"Plaintext");
 
 
-endtask
+endtask : AES_ECB_Decrypt
 
 
 //Common / Utility
@@ -130,7 +125,7 @@ task Load_AES_State_1Col(input logic [7:0] byte_in [15:0], input int start_addr)
     Load_IMC_Byte(byte_in[8],start_addr+'h68);
     Load_IMC_Byte(byte_in[4],start_addr+'h70);
     Load_IMC_Byte(byte_in[0],start_addr+'h78);
-endtask
+endtask : Load_AES_State_1Col
 
 
 //Round Functions
@@ -268,7 +263,8 @@ task AES_ARK();
     Send_IMC_Command(32'd92142973);
     Send_IMC_Command(32'd92208766);
     Send_IMC_Command(32'd92274559);
-endtask
+endtask : AES_ARK
+
 
 task AES_SBOX();
 
@@ -2080,7 +2076,9 @@ task AES_SBOX();
     Send_IMC_Command(32'd98887400);
     Send_IMC_Command(32'd300471421);
     Send_IMC_Command(32'd99083386);
-endtask
+
+endtask : AES_SBOX
+
 
 task AES_MC();
 
@@ -2453,7 +2451,7 @@ task AES_MC();
     Send_IMC_Command(32'd89201179);
     Send_IMC_Command(32'd87301116);
 
-endtask
+endtask : AES_MC
 
 task AES_Inv_SBOX();
 
@@ -4490,7 +4488,7 @@ task AES_Inv_SBOX();
     Send_IMC_Command(32'd90730745);
     Send_IMC_Command(32'd90401528);
 
-endtask
+endtask : AES_Inv_SBOX
 
 
 task AES_Inv_MC();
@@ -5600,4 +5598,4 @@ task AES_Inv_MC();
     Send_IMC_Command(32'd85015099);
     Send_IMC_Command(32'd91503580);
 
-endtask
+endtask : AES_Inv_MC
