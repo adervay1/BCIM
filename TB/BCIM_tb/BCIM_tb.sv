@@ -156,7 +156,7 @@ initial begin
     env_cipher_obj = new("ECB_AES_child", "ECB_AES");
     
     env_cipher_obj.AES_ECB_Encrypt();
-    env_cipher_obj.AES_ECB_Decrypt();
+    //env_cipher_obj.AES_ECB_Decrypt();
 
 
     #128000;

@@ -5,57 +5,108 @@ task AES_ECB_Encrypt();
     logic [7:0] round_key_bytes [15:0];
     logic [7:0] key_bytes [9:0][15:0];
 
+
+
+
+
+    key_bytes[0] = '{8'hA0,8'h88,8'h23,8'h2A,  //Row 0
+                    8'hFA,8'h54,8'hA3,8'h6C,
+                    8'hFE,8'h2C,8'h39,8'h76,
+                    8'h17,8'hB1,8'h39,8'h05}; //Row 3
+
+    key_bytes[1] = '{8'hF2,8'h7A,8'h59,8'h73,  //Row 0
+                    8'hC2,8'h96,8'h35,8'h59,
+                    8'h95,8'hB9,8'h80,8'hF6,
+                    8'hF2,8'h43,8'h7A,8'h7F}; //Row 3
+                    
+    key_bytes[2] = '{8'h3D,8'h47,8'h1E,8'h6D,  //Row 0
+                    8'h80,8'h16,8'h23,8'h7A,
+                    8'h47,8'hFE,8'h7E,8'h88,
+                    8'h7D,8'h3E,8'h44,8'h3B}; //Row 3
+                    
+    key_bytes[3] = '{8'hEF,8'hA8,8'hB6,8'hDB,  //Row 0
+                    8'h44,8'h52,8'h71,8'h0B,
+                    8'hA5,8'h5B,8'h25,8'hAD,
+                    8'h41,8'h7F,8'h3B,8'h00}; //Row 3
+                    
+    key_bytes[4] = '{8'hD4,8'h7C,8'hCA,8'h11,  //Row 0
+                    8'hD1,8'h83,8'hF2,8'hF9,
+                    8'hC6,8'h9D,8'hB8,8'h15,
+                    8'hF8,8'h87,8'hBC,8'hBC}; //Row 3
+                    
+    key_bytes[5] = '{8'h6D,8'h11,8'hDB,8'hCA,  //Row 0
+                    8'h88,8'h0B,8'hF9,8'h00,
+                    8'hA3,8'h3E,8'h86,8'h93,
+                    8'h7A,8'hFD,8'h41,8'hFD}; //Row 3
+                    
+    key_bytes[6] = '{8'h4E,8'h5F,8'h84,8'h4E,  //Row 0
+                    8'h54,8'h5F,8'hA6,8'hA6,
+                    8'hF7,8'hC9,8'h4F,8'hDC,
+                    8'h0E,8'hF3,8'hB2,8'h4F}; //Row 3
+                    
+    key_bytes[7] = '{8'hEA,8'hB5,8'h31,8'h7F,  //Row 0
+                    8'hD2,8'h8D,8'h2B,8'h8D,
+                    8'h73,8'hBA,8'hF5,8'h29,
+                    8'h21,8'hD2,8'h60,8'h2F}; //Row 3
+                    
+    key_bytes[8] = '{8'hAC,8'h19,8'h28,8'h57,  //Row 0
+                    8'h77,8'hFA,8'hD1,8'h5C,
+                    8'h66,8'hDC,8'h29,8'h00,
+                    8'hF3,8'h21,8'h41,8'h6E}; //Row 3
+
+    key_bytes[9] = '{8'hD0,8'hC9,8'hE1,8'hB6,  //Row 0
+                    8'h14,8'hEE,8'h3F,8'h63,
+                    8'hF9,8'h25,8'h0C,8'h0C,
+                    8'hA8,8'h89,8'hC8,8'hA6}; //Row 3
+
+
+
+
     //Load Plain Text
     //Column-Wise 0-3
     plain_text_bytes    = '{8'h32,8'h88,8'h31,8'hE0,  //Row 0
                             8'h43,8'h5A,8'h31,8'h37,
                             8'hF6,8'h30,8'h98,8'h07,
                             8'hA8,8'h8D,8'hA2,8'h34}; //Row 3
-    Load_AES_State_1Col(plain_text_bytes,'h0);
+    Load_AES_State_1Col(plain_text_bytes,'h80);
+    Print_AES_State_Bytes_1Col('h80,"Plain Text:");
     
-    //#10us;
-    //Print_State_Bytes_1Col('h0,"Plain Text:");
-    
-    
+    //Load Initial Key
+    //Column-Wise 0-3
     round_key_bytes = '{8'h2B,8'h28,8'hAB,8'h09,  //Row 0
                         8'h7E,8'hAE,8'hF7,8'hCF,
                         8'h15,8'hD2,8'h15,8'h4F,
                         8'h16,8'hA6,8'h88,8'h3C}; //Row 3
-    Load_AES_State_1Col(round_key_bytes,'h80);
-    
-    //#10us;
-    //Print_State_Bytes_1Col('h80,"Initial Key");
+    Load_AES_State_1Col(round_key_bytes,'h00);
+    Print_AES_State_Bytes_1Col('h00,"Initial Key");
     
     AES_ARK();
-    
-    //#10us;
-    //Print_State_Bytes_1Col('h00,"Initial Add Key");
+    Print_AES_State_Bytes_1Col('h00,"Add Init Key");
     
     
+    for (int rnd = 1; rnd < 10; rnd++) begin
+        AES_SBOX();
+        Print_AES_State_Bytes_1Col('h00,$sformatf("SBOX %2d",rnd));
     
+        AES_MC();
+        Print_AES_State_Bytes_1Col('h80,$sformatf("MC %2d",rnd));
+        
+        Load_AES_State_1Col(key_bytes[rnd-1],'h00);
+        Print_AES_State_Bytes_1Col('h00,$sformatf("Key %2d",rnd));
+        
+        AES_ARK();
+        Print_AES_State_Bytes_1Col('h00,$sformatf("ARK %2d",rnd));
+    end
+    
+    //Final round omits MC and needs remapping on ARK input
     AES_SBOX();
+    Print_AES_State_Bytes_1Col('h00,$sformatf("SBOX %2d",10));
     
-    //#10us;
-    //Print_State_Bytes_1Col('h00,"Initial Add Key");
+    Load_AES_State_1Col(key_bytes[9],'h80);
+    Print_AES_State_Bytes_1Col('h80,$sformatf("Key %2d",10));
     
-    AES_MC();
-    
-    //#10us;
-    //Print_State_Bytes_1Col('h80,"1 Col");
-    
-    
-    
-    key_bytes[0] = '{8'hA0,8'h88,8'h23,8'h2A,  //Row 0
-                    8'hFA,8'h54,8'hA3,8'h6C,
-                    8'hFE,8'h2C,8'h39,8'h76,
-                    8'h17,8'hB1,8'h39,8'h05}; //Row 3
-    Load_AES_State_1Col(key_bytes[0],'h00);
-    
-    
-    AES_ARK();
-    
-    #10us;
-    Print_AES_State_Bytes_1Col('h00,"Add Key 1");
+    AES_ARK_10();
+    Print_AES_State_Bytes_1Col('h80,"Cipher Text");
 
 endtask : AES_ECB_Encrypt
 
@@ -266,7 +317,147 @@ task AES_ARK();
 endtask : AES_ARK
 
 
+task AES_ARK_10();
+//This ARK uses remapping for the final round as MC is omitted in the final AES round
+//State Input   00-7F
+//Key Input     80-FF
+//Output        80-FF
+
+    Send_IMC_Command(32'd83918976);
+    Send_IMC_Command(32'd83984769);
+    Send_IMC_Command(32'd84050562);
+    Send_IMC_Command(32'd84116355);
+    Send_IMC_Command(32'd84182148);
+    Send_IMC_Command(32'd84247941);
+    Send_IMC_Command(32'd84313734);
+    Send_IMC_Command(32'd84379527);
+    Send_IMC_Command(32'd86542472);
+    Send_IMC_Command(32'd86608265);
+    Send_IMC_Command(32'd86674058);
+    Send_IMC_Command(32'd86739851);
+    Send_IMC_Command(32'd86805644);
+    Send_IMC_Command(32'd86871437);
+    Send_IMC_Command(32'd86937230);
+    Send_IMC_Command(32'd87003023);
+    Send_IMC_Command(32'd89165968);
+    Send_IMC_Command(32'd89231761);
+    Send_IMC_Command(32'd89297554);
+    Send_IMC_Command(32'd89363347);
+    Send_IMC_Command(32'd89429140);
+    Send_IMC_Command(32'd89494933);
+    Send_IMC_Command(32'd89560726);
+    Send_IMC_Command(32'd89626519);
+    Send_IMC_Command(32'd91789464);
+    Send_IMC_Command(32'd91855257);
+    Send_IMC_Command(32'd91921050);
+    Send_IMC_Command(32'd91986843);
+    Send_IMC_Command(32'd92052636);
+    Send_IMC_Command(32'd92118429);
+    Send_IMC_Command(32'd92184222);
+    Send_IMC_Command(32'd92250015);
+    Send_IMC_Command(32'd86024352);
+    Send_IMC_Command(32'd86090145);
+    Send_IMC_Command(32'd86155938);
+    Send_IMC_Command(32'd86221731);
+    Send_IMC_Command(32'd86287524);
+    Send_IMC_Command(32'd86353317);
+    Send_IMC_Command(32'd86419110);
+    Send_IMC_Command(32'd86484903);
+    Send_IMC_Command(32'd88647848);
+    Send_IMC_Command(32'd88713641);
+    Send_IMC_Command(32'd88779434);
+    Send_IMC_Command(32'd88845227);
+    Send_IMC_Command(32'd88911020);
+    Send_IMC_Command(32'd88976813);
+    Send_IMC_Command(32'd89042606);
+    Send_IMC_Command(32'd89108399);
+    Send_IMC_Command(32'd91271344);
+    Send_IMC_Command(32'd91337137);
+    Send_IMC_Command(32'd91402930);
+    Send_IMC_Command(32'd91468723);
+    Send_IMC_Command(32'd91534516);
+    Send_IMC_Command(32'd91600309);
+    Send_IMC_Command(32'd91666102);
+    Send_IMC_Command(32'd91731895);
+    Send_IMC_Command(32'd85506232);
+    Send_IMC_Command(32'd85572025);
+    Send_IMC_Command(32'd85637818);
+    Send_IMC_Command(32'd85703611);
+    Send_IMC_Command(32'd85769404);
+    Send_IMC_Command(32'd85835197);
+    Send_IMC_Command(32'd85900990);
+    Send_IMC_Command(32'd85966783);
+    Send_IMC_Command(32'd88129728);
+    Send_IMC_Command(32'd88195521);
+    Send_IMC_Command(32'd88261314);
+    Send_IMC_Command(32'd88327107);
+    Send_IMC_Command(32'd88392900);
+    Send_IMC_Command(32'd88458693);
+    Send_IMC_Command(32'd88524486);
+    Send_IMC_Command(32'd88590279);
+    Send_IMC_Command(32'd90753224);
+    Send_IMC_Command(32'd90819017);
+    Send_IMC_Command(32'd90884810);
+    Send_IMC_Command(32'd90950603);
+    Send_IMC_Command(32'd91016396);
+    Send_IMC_Command(32'd91082189);
+    Send_IMC_Command(32'd91147982);
+    Send_IMC_Command(32'd91213775);
+    Send_IMC_Command(32'd84988112);
+    Send_IMC_Command(32'd85053905);
+    Send_IMC_Command(32'd85119698);
+    Send_IMC_Command(32'd85185491);
+    Send_IMC_Command(32'd85251284);
+    Send_IMC_Command(32'd85317077);
+    Send_IMC_Command(32'd85382870);
+    Send_IMC_Command(32'd85448663);
+    Send_IMC_Command(32'd87611608);
+    Send_IMC_Command(32'd87677401);
+    Send_IMC_Command(32'd87743194);
+    Send_IMC_Command(32'd87808987);
+    Send_IMC_Command(32'd87874780);
+    Send_IMC_Command(32'd87940573);
+    Send_IMC_Command(32'd88006366);
+    Send_IMC_Command(32'd88072159);
+    Send_IMC_Command(32'd90235104);
+    Send_IMC_Command(32'd90300897);
+    Send_IMC_Command(32'd90366690);
+    Send_IMC_Command(32'd90432483);
+    Send_IMC_Command(32'd90498276);
+    Send_IMC_Command(32'd90564069);
+    Send_IMC_Command(32'd90629862);
+    Send_IMC_Command(32'd90695655);
+    Send_IMC_Command(32'd84469992);
+    Send_IMC_Command(32'd84535785);
+    Send_IMC_Command(32'd84601578);
+    Send_IMC_Command(32'd84667371);
+    Send_IMC_Command(32'd84733164);
+    Send_IMC_Command(32'd84798957);
+    Send_IMC_Command(32'd84864750);
+    Send_IMC_Command(32'd84930543);
+    Send_IMC_Command(32'd87093488);
+    Send_IMC_Command(32'd87159281);
+    Send_IMC_Command(32'd87225074);
+    Send_IMC_Command(32'd87290867);
+    Send_IMC_Command(32'd87356660);
+    Send_IMC_Command(32'd87422453);
+    Send_IMC_Command(32'd87488246);
+    Send_IMC_Command(32'd87554039);
+    Send_IMC_Command(32'd89716984);
+    Send_IMC_Command(32'd89782777);
+    Send_IMC_Command(32'd89848570);
+    Send_IMC_Command(32'd89914363);
+    Send_IMC_Command(32'd89980156);
+    Send_IMC_Command(32'd90045949);
+    Send_IMC_Command(32'd90111742);
+    Send_IMC_Command(32'd90177535);
+
+endtask: AES_ARK_10
+
+
 task AES_SBOX();
+//State Input   00-7F
+//Output        00-7F
 
     Send_IMC_Command(32'd84148864);
     Send_IMC_Command(32'd84345217);
@@ -2081,6 +2272,8 @@ endtask : AES_SBOX
 
 
 task AES_MC();
+//State Input   00-7F
+//Output        80-FF
 
     Send_IMC_Command(32'd83896480);
     Send_IMC_Command(32'd89159841);
