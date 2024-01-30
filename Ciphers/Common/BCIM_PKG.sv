@@ -82,6 +82,20 @@ package BCIM_PKG;
             
         endtask : Print_AES_State_Bytes_1Col
 
+
+        task Get_AES_State_Bytes_1Col(input int start_addr, output logic [7:0] state_bytes [15:0]);
+        
+        logic [BUS_DATA_WIDTH-1:0] rdata;
+        
+            for (int j = 0; j < 16; j++) begin
+                for (int i = 0; i < 8; i++) begin
+                    Read_Memory_Array((start_addr+(j*8)+i), rdata);
+                    state_bytes[j][i] = rdata[0];
+                end
+            end
+
+        endtask : Get_AES_State_Bytes_1Col
+
     
         //Definitions of Cipher routines(methods)
         `include "../ECB_AES/ECB_AES_methods.sv";
@@ -91,12 +105,12 @@ package BCIM_PKG;
 
 
         //IMC Routines
-        task Run_Cipher();
+        task Run_Cipher(output logic passed);
             case (this.prgm)
-                "ECB_AES"   : this.AES_ECB_Encrypt();
-                "CTR_AES"   : this.test_ctr_aes();
-                "RECTANGLE" : this.test_rectangle();
-                "SIMON"     : this.test_simon();
+                "ECB_AES"   : this.AES_ECB_Demo(passed);
+                "CTR_AES"   : passed = 0; //this.test_ctr_aes();
+                "RECTANGLE" : passed = 0; //this.test_rectangle();
+                "SIMON"     : passed = 0; //this.test_simon();
             endcase
         endtask : Run_Cipher
           

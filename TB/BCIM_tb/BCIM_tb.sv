@@ -23,6 +23,8 @@ logic [31:0] avalon_mm_rdata;
 
 logic       avalon_mm_waitreq, avalon_mm_readdatavalid, avalon_mm_read, avalon_mm_write;
 
+logic passed;
+
 
 avalon_mm_sim_block avalon_mm_sim_block_inst (
     .clk               (clk), // clk.clk
@@ -155,8 +157,11 @@ initial begin
     //Construct Cipher Object
     env_cipher_obj = new("ECB_AES_child", "ECB_AES");
     
-    env_cipher_obj.AES_ECB_Encrypt();
+    //env_cipher_obj.AES_ECB_Encrypt();
     //env_cipher_obj.AES_ECB_Decrypt();
+    env_cipher_obj.Run_Cipher(passed);
+    
+    $display("Cipher: (%s) \nPassed: (%b)", env_cipher_obj.my_name, passed);
 
 
     #128000;
