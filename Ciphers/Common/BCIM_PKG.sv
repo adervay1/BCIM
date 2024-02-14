@@ -85,7 +85,7 @@ package BCIM_PKG;
 
         task Get_AES_State_Bytes_1Col(input int start_addr, output logic [7:0] state_bytes [15:0]);
         
-        logic [BUS_DATA_WIDTH-1:0] rdata;
+            logic [BUS_DATA_WIDTH-1:0] rdata;
         
             for (int j = 0; j < 16; j++) begin
                 for (int i = 0; i < 8; i++) begin
@@ -95,6 +95,49 @@ package BCIM_PKG;
             end
 
         endtask : Get_AES_State_Bytes_1Col
+        
+        
+        task Print_REC_State_Bytes_1Col(input int start_addr, string tag);
+            logic [15:0] state_rows [3:0];
+            //When I tried to put this into an `include file, it was failing to recognize the parameter
+            //Probably an issue with scope and `include compilation order so for now leave here.
+            logic [BUS_DATA_WIDTH-1:0] rdata;
+        
+            
+            for (int j = 0; j < 4; j++) begin
+                for (int i = 0; i < 16; i++) begin
+                    Read_Memory_Array((start_addr+(j*16)+i), rdata);
+                    state_rows[j][i] = rdata[0];
+                end
+            end
+            $display("---------------------");
+            $display("\t%S",tag);
+            $display("---------------------");
+            $display("|       0x%H      |", state_rows[0]);
+            $display("---------------------");
+            $display("|       0x%H      |", state_rows[1]);
+            $display("---------------------");
+            $display("|       0x%H      |", state_rows[2]);
+            $display("---------------------");
+            $display("|       0x%H      |", state_rows[3]);
+            $display("---------------------");
+            
+        endtask : Print_REC_State_Bytes_1Col
+        
+        
+        task Get_REC_State_Bytes_1Col(input int start_addr, output logic [15:0] state_rows [3:0]);
+
+            logic [BUS_DATA_WIDTH-1:0] rdata;
+        
+            
+            for (int j = 0; j < 4; j++) begin
+                for (int i = 0; i < 16; i++) begin
+                    Read_Memory_Array((start_addr+(j*16)+i), rdata);
+                    state_rows[j][i] = rdata[0];
+                end
+            end
+
+        endtask : Get_REC_State_Bytes_1Col
 
     
         //Definitions of Cipher routines(methods)
@@ -109,7 +152,7 @@ package BCIM_PKG;
             case (this.prgm)
                 "ECB_AES"   : this.AES_ECB_Demo(passed);
                 "CTR_AES"   : passed = 0; //this.test_ctr_aes();
-                "RECTANGLE" : passed = 0; //this.test_rectangle();
+                "RECTANGLE" : this.RECTANGLE_Demo(passed);
                 "SIMON"     : passed = 0; //this.test_simon();
             endcase
         endtask : Run_Cipher

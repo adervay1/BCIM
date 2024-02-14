@@ -15,7 +15,7 @@ task AES_ECB_Demo(output logic passed);
     
     //Input state vector is represented in a manner that is easy to read. 
     //This reshapes it to match memory and allow for comparison to result of decryption
-    reshape_state(plain_text_bytes,plain_text_bytes);
+    Reshape_AES_State(plain_text_bytes,plain_text_bytes);
     
     passed = (plain_text_bytes == decrypted_bytes);
 endtask
@@ -259,7 +259,7 @@ task Load_AES_State_1Col(input logic [7:0] byte_in [15:0], input int start_addr)
 endtask : Load_AES_State_1Col
 
 
-function reshape_state(input logic [7:0] state_bytes [15:0], output logic [7:0] state_bytes_mem [15:0]);
+function Reshape_AES_State(input logic [7:0] state_bytes [15:0], output logic [7:0] state_bytes_mem [15:0]);
     //This function takes the formatting I used to manually format state data and convertes it to a "linear" array as loaded in memory
     state_bytes_mem[0]     = state_bytes[15];
     state_bytes_mem[1]     = state_bytes[11];

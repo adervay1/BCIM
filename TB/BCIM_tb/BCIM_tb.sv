@@ -155,10 +155,9 @@ initial begin
     avalon_mm_sim_block_inst.mm_master_bfm_0.init();
 
     //Construct Cipher Object
-    env_cipher_obj = new("ECB_AES_child", "ECB_AES");
+    env_cipher_obj = new("REC_child", "RECTANGLE");
+    //env_cipher_obj = new("ECB_AES_child", "ECB_AES");
     
-    //env_cipher_obj.AES_ECB_Encrypt();
-    //env_cipher_obj.AES_ECB_Decrypt();
     env_cipher_obj.Run_Cipher(passed);
     
     $display("Cipher: (%s) \nPassed: (%b)", env_cipher_obj.my_name, passed);
