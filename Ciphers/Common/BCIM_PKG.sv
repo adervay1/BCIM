@@ -18,7 +18,7 @@ package BCIM_PKG;
                 "ECB_AES"   : this.prgm = prgm;
                 "CTR_AES"   : this.prgm = prgm;
                 "RECTANGLE" : this.prgm = prgm;
-                "SIMON"     : this.prgm = prgm;
+                "Simon"     : this.prgm = prgm;
                 default     : $display("ERROR: Constructor Program Arg Empty or Unrecognized (%s)",this.prgm);
             endcase
             
@@ -129,7 +129,6 @@ package BCIM_PKG;
 
             logic [BUS_DATA_WIDTH-1:0] rdata;
         
-            
             for (int j = 0; j < 4; j++) begin
                 for (int i = 0; i < 16; i++) begin
                     Read_Memory_Array((start_addr+(j*16)+i), rdata);
@@ -138,13 +137,49 @@ package BCIM_PKG;
             end
 
         endtask : Get_REC_State_Bytes_1Col
+        
+        
+        task Print_Simon_State_Bytes_1Col(input int start_addr, string tag);
+            logic [63:0] state_bits;
+            //When I tried to put this into an `include file, it was failing to recognize the parameter
+            //Probably an issue with scope and `include compilation order so for now leave here.
+            logic [BUS_DATA_WIDTH-1:0] rdata;
+        
+            
+            for (int i = 0; i < 64; i++) begin
+                Read_Memory_Array((start_addr+i), rdata);
+                state_bits[i] = rdata[0];
+            end
+
+            $display("---------------------------");
+            $display("\t%S",tag);
+            $display("---------------------------");
+            $display("|     L      |     R      |");
+            $display("---------------------------");
+            $display("| 0x%H | 0x%H |", state_bits[63:32], state_bits[31:0]);
+            $display("---------------------------");
+
+            
+        endtask : Print_Simon_State_Bytes_1Col
+        
+        
+        task Get_Simon_State_Bytes_1Col(input int start_addr, output logic [63:0] state_bits);
+
+            logic [BUS_DATA_WIDTH-1:0] rdata;
+        
+            for (int i = 0; i < 64; i++) begin
+                Read_Memory_Array((start_addr+i), rdata);
+                state_bits[i] = rdata[0];
+            end
+
+        endtask : Get_Simon_State_Bytes_1Col
 
     
         //Definitions of Cipher routines(methods)
         `include "../ECB_AES/ECB_AES_methods.sv";
         `include "../CTR_AES/CTR_AES_methods.sv";
         `include "../RECTANGLE/RECTANGLE_methods.sv";
-        `include "../SIMON/SIMON_methods.sv";
+        `include "../Simon/Simon_methods.sv";
 
 
         //IMC Routines
@@ -153,7 +188,7 @@ package BCIM_PKG;
                 "ECB_AES"   : this.AES_ECB_Demo(passed);
                 "CTR_AES"   : passed = 0; //this.test_ctr_aes();
                 "RECTANGLE" : this.RECTANGLE_Demo(passed);
-                "SIMON"     : passed = 0; //this.test_simon();
+                "Simon"     : this.Simon_Demo(passed);
             endcase
         endtask : Run_Cipher
           

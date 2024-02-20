@@ -155,7 +155,8 @@ initial begin
     avalon_mm_sim_block_inst.mm_master_bfm_0.init();
 
     //Construct Cipher Object
-    env_cipher_obj = new("REC_child", "RECTANGLE");
+    env_cipher_obj = new("Simon_child", "Simon");
+    //env_cipher_obj = new("REC_child", "RECTANGLE");
     //env_cipher_obj = new("ECB_AES_child", "ECB_AES");
     
     env_cipher_obj.Run_Cipher(passed);
