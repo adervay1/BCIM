@@ -53,7 +53,7 @@ task RECTANGLE_Demo(output logic passed);
     
     REC_ARK();
     
-    Print_REC_State_Bytes_1Col('h00, $sformatf("Cipher Text %2d",25));
+    Print_REC_State_Bytes_1Col('h00, "Cipher Text");
           
     Get_REC_State_Bytes_1Col('h00, cipher_text);
     
